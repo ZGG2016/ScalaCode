@@ -7,7 +7,7 @@ object foldByKey {
   }
 
   def main(Args: Array[String]): Unit = {
-    val conf = new SparkConf().setAppName("groupByKey").setMaster("local")
+    val conf = new SparkConf().setAppName("foldByKey").setMaster("local")
     val sc = new SparkContext(conf)
 
     val rdd = sc.parallelize(List(("a", 1), ("a", 6),("a", 7),("b", 5), ("b", 3)), 2)
@@ -22,7 +22,7 @@ object foldByKey {
 
 /**
  * 分区0：("a", 1), ("a", 6)
- * 分区1：("a", 7),("b", 5), ("b", 3)
+ * 分区1：("a", 7), ("b", 5), ("b", 3)
  *
  * "0值":2   【第一个参数函数：创建初始值】
  *  对分区0：
@@ -33,7 +33,7 @@ object foldByKey {
  *         7+3=10 ("b",10)【第二个参数函数，追加】
  *         2+7=9  ("a",9)
  *
- *  rlt:("a",9+9=18)，即  【第二个参数函数，合并】
+ *  rlt:("a",9+9=18)，即  【第三个参数函数，合并】
  *      ("b",10)
  *
  * */
