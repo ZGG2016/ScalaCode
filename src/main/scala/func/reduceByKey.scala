@@ -1,3 +1,5 @@
+package func
+
 import org.apache.spark.{SparkConf, SparkContext}
 
 object reduceByKey {

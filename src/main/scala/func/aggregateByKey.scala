@@ -1,3 +1,5 @@
+package func
+
 import org.apache.spark.{SparkConf, SparkContext}
 
 object aggregateByKey {
@@ -16,21 +18,8 @@ object aggregateByKey {
 
     //rdd.mapPartitionsWithIndex(func2).foreach(println)
 
-    val res  = rdd.aggregateByKey(0)(math.max, _+_)
-    res.collect.foreach(println)
+    val rlt  = rdd.aggregateByKey(0)(math.max, _+_)
+    rlt.collect.foreach(println)
 
   }
 }
-
-/**
- * 分区 0 ： (1,3) 、(1,2)、(1,4)
- * 分区 1 ： (2,3)、(3,6) 、(3,8)
- *
- * "0值":0   【第一个参数函数：创建初始值】
- * 对分区 0： (1,4)
- *
- * 对分区 1：(2,3)
- *          (3,8)  【第二个参数函数，追加】、【第三个参数函数，合并】
- *
- * 如果"0值"是5，结果为 (1,5)(2,5)(3,8)
- */
