@@ -13,5 +13,12 @@ object mapValues {
     val rlt = rdd.mapValues(x=>x.toUpperCase)
 
     rlt.collect.foreach(println)
+    /**
+     * (a,TOM)
+     * (b,JACK)
+     * (c,MIKE)
+     * (d,ALICE)
+     *
+     */
   }
 }

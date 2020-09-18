@@ -13,5 +13,24 @@ object flatMapValues {
     val rlt = rdd.flatMapValues(x=>x.toUpperCase)
 
     rlt.collect.foreach(println)
+    /**
+     * (a,T)
+     * (a,O)
+     * (a,M)
+     * (b,J)
+     * (b,A)
+     * (b,C)
+     * (b,K)
+     * (c,M)
+     * (c,I)
+     * (c,K)
+     * (c,E)
+     * (d,A)
+     * (d,L)
+     * (d,I)
+     * (d,C)
+     * (d,E)
+     *
+     */
   }
 }
