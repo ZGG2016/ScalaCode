@@ -7,7 +7,7 @@ object groupByKey {
     val conf = new SparkConf().setAppName("groupByKey").setMaster("local")
     val sc = new SparkContext(conf)
 
-    val rdd = sc.textFile("src/main/data/reduceByKey.txt")
+    val rdd = sc.parallelize("aabbaab")
 
     val rlt = rdd.map((_,1)).groupByKey()
 

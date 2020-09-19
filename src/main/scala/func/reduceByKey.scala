@@ -7,10 +7,10 @@ object reduceByKey {
     val conf = new SparkConf().setAppName("reduceByKey").setMaster("local")
     val sc = new SparkContext(conf)
 
-    val lines = sc.textFile("src/main/data/reduceByKey.txt")
+    val data = sc.parallelize("aabbaab")
 
     //val pairs = lines.map(s=>(s,1))
-    val pairs = lines.map((_,1))
+    val pairs = data.map((_,1))
 
     //val count = pairs.reduceByKey((a,b)=>a+b)
     val count = pairs.reduceByKey(_+_)
