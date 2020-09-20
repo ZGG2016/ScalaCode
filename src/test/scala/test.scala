@@ -7,17 +7,11 @@ object test {
       val conf = new SparkConf().setAppName("mapPartitions").setMaster("local")
       val sc = new SparkContext(conf)
 
-      val data = sc.parallelize(1 to 5)
+      val data = sc.parallelize(List(1,2,2,3,3,4,5))
 
-      val result = data.mapPartitions(x=>{
-        val list = new ListBuffer[String]()
-        while(x.hasNext){
-          list+=x.next()+"==>"
-        }
-        list.iterator
-      })
+      val rlt = data.map(x=>(x,null)).reduceByKey((x,y)=>x)
 
-      result.foreach(println)
+      rlt.foreach(println)
     }
 
 }
