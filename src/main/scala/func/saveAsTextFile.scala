@@ -11,6 +11,6 @@ object saveAsTextFile {
 
     val rlt = rdd.map(x=>x+1)
 
-    rlt.saveAsTextFile("src/main/data/saveAsTextFile")
+    rlt.saveAsTextFile("src/main/resoures/saveAsTextFile")
   }
 }

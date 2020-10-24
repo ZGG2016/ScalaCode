@@ -6,7 +6,7 @@ object wc_local {
     val conf = new SparkConf().setAppName("wordcount").setMaster("local")
     val sc = new SparkContext(conf)
 
-    val data = sc.textFile("src/main/data/wc.txt")
+    val data = sc.textFile("src/main/resoures/wc.txt")
 
     val wc = data.flatMap(_.split(" ")).map((_,1)).reduceByKey(_+_)
 
