@@ -11,7 +11,7 @@ object randomSplit {
 
     val rlt = rdd.randomSplit(Array(1.0,2.0,3.0,4.0),10)
 
-    println(rlt.length)  //3  ，返回值类型：Array[RDD[T]]
+    println(rlt.length)  //4  ，返回值类型：Array[RDD[T]]
 
     for(x <- rlt){
       x.collect().foreach(print) //2  |8  | 1568  | 2288  |
