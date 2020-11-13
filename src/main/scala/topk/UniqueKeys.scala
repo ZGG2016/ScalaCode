@@ -16,7 +16,7 @@ object UniqueKeys {
     val conf = new SparkConf().setMaster("local").setAppName("UniqueKeys")
     val sc = new SparkContext(conf)
 
-    val rdd = sc.textFile("src/main/resoures/UniqueKeys.txt")
+    val rdd = sc.textFile("src/main/resources/UniqueKeys.txt")
 
     val kvRDD = rdd.map(line => {
       val tokens: Array[String] = line.split(" ")

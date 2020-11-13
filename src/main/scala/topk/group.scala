@@ -14,31 +14,37 @@ object group {
     val conf = new SparkConf().setMaster("local").setAppName("NonUniqueKeys")
     val sc = new SparkContext(conf)
 
-    val rdd = sc.textFile("src/main/resoures/topk.txt")
+    val rdd = sc.textFile("src/main/resources/topk.txt")
 
-    val kvRDD = rdd.flatMap(_.split(" ")).map(x => (x.toInt, 1))
+    val kvRDD = rdd.filter(line => line.length > 0)
+      .map(line => line.split(" "))
+      .map(arr => (arr(0).trim, arr(1).trim.toInt))
 
     //方法1
     //使用groupByKey的方式实现读取TopK的数据
-    kvRDD.groupByKey().map(x => {
-      val topk = x._2.toList.sorted.takeRight(5).reverse
-      (x._1, topk)
-    }).foreach(println)
+//    kvRDD.groupByKey().map(x => {
+//      val topk = x._2.toList.sorted.takeRight(5).reverse
+//      (x._1, topk)
+//    }).foreach(println)
+
+    println("------------------------------------------------------")
 
     //方法2
     //2.使用两阶段聚合，先使用随机数进行分组聚合取出局部TopK,再聚合取出全局TopK的数据
-    kvRDD.mapPartitions(iterator => {
-        iterator.map(x => {
-          ((Random.nextInt(10), x._1), x._2)
-        })
-      }).groupByKey().flatMap({
-      //获取values中的前N个值 ，并返回topN的集合数据
-      case ((_, key), values) =>
-        values.toList.sorted.takeRight(5).map(value => (key, value))
-    }).groupByKey().map(tuple2 => {
-      val topn = tuple2._2.toList.sorted.takeRight(5).reverse
-      (tuple2._1, topn)
-    }).foreach(println)
+//    kvRDD.mapPartitions(iterator => {
+//        iterator.map(x => {
+//          ((Random.nextInt(10), x._1), x._2)
+//        })
+//      }).groupByKey().flatMap({
+//      //获取values中的前N个值 ，并返回topN的集合数据
+//      case ((_, key), values) =>
+//        values.toList.sorted.takeRight(5).map(value => (key, value))
+//    }).groupByKey().map(tuple2 => {
+//      val topn = tuple2._2.toList.sorted.takeRight(5).reverse
+//      (tuple2._1, topn)
+//    }).foreach(println)
+
+    println("------------------------------------------------------")
 
     //方法3
     //使用aggregateByKey获取TopK的记录
@@ -53,6 +59,7 @@ object group {
         u1.sorted.takeRight(5)
       }
     ).map(tuple2 => (tuple2._1, tuple2._2.toList.reverse)).foreach(println)
+
   }
 }
 

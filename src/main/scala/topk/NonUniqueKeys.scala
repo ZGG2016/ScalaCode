@@ -17,7 +17,7 @@ object NonUniqueKeys {
     val conf = new SparkConf().setMaster("local").setAppName("NonUniqueKeys")
     val sc = new SparkContext(conf)
 
-    val rdd = sc.textFile("src/main/resoures/NonUniqueKeys.txt")
+    val rdd = sc.textFile("src/main/resources/UniqueKeys.txt")
 
     val kvRDD = rdd.map(line => {
       val tokens = line.split(" ")
@@ -25,15 +25,15 @@ object NonUniqueKeys {
     })
 
     //方法1
-    val createCombiner: Int => Int = (v: Int) => v
-    val mergeValue: (Int, Int) => Int = (a: Int, b: Int) => a + b
-
-    kvRDD.combineByKey(createCombiner, mergeValue, mergeValue)
-      .map(_.swap)
-      .groupByKey()
-      .sortByKey(ascending = false)
-      .take(5)
-      .foreach(println)
+//    val createCombiner: Int => Int = (v: Int) => v
+//    val mergeValue: (Int, Int) => Int = (a: Int, b: Int) => a + b
+//
+//    kvRDD.combineByKey(createCombiner, mergeValue, mergeValue)
+//      .map(_.swap)
+//      .groupByKey()
+//      .sortByKey(ascending = false)
+//      .take(5)
+//      .foreach(println)
 //kvRDD.groupByKey().map(item => item._1 -> item._2.toList.sortWith(_ > _).take(3))
 
     //方法2
@@ -49,6 +49,7 @@ object NonUniqueKeys {
       })
       sortedMap.takeRight(5).toIterator
     }).foreach(println)
+
   }
 
 }

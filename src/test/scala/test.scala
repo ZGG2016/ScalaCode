@@ -7,11 +7,8 @@ object test {
       val conf = new SparkConf().setAppName("mapPartitions").setMaster("local")
       val sc = new SparkContext(conf)
 
-      val data = sc.parallelize(List(1,2,2,3,3,4,5))
+      val rdd = sc.parallelize(List("111 78 444 45 23 111 12 35 555 78 98 23 111 222 333 444 555"))
 
-      val rlt = data.map(x=>(x,null)).reduceByKey((x,y)=>x)
-
-      rlt.foreach(println)
-    }
+  }
 
 }
